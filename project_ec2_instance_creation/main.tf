@@ -9,5 +9,4 @@ resource "aws_instance" "prometheus-VM" {
     instance_type = "t2.small"
     subnet_id = "subnet-084a18eae9dbb2283"
     key_name = "my_work"
-#    security_groups = "sg-01dd79cbdefbf5477"
 }
