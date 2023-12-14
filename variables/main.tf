@@ -13,15 +13,19 @@ variable "input_instance_type" {
 variable "input_subnet_id" {
   description = "Input variable for subnet ID"
   type = string
-  default = "subnet-084a18eae9dbb2283"
+  default = "subnet-ID"
 }
 #################################################
 
 resource "aws_instance" "ec2-useast-1" {
-  ami = "ami-031bc7545ba35f815"
+  ami = "ami-ID"
   instance_type = var.input_instance_type
-  key_name = "my_work"
+  key_name = "Pem_key"
   subnet_id = var.input_subnet_id
+  tags = {
+    "Name" = "Prometheus-VM"
+    "Owner" = "DevOps"
+  }
 }
 
 ######### Output Variable Block ###########
