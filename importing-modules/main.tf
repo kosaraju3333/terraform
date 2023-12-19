@@ -4,8 +4,8 @@ provider "aws" {
 
 module "ec2_instance" {
   source = "../modules/ec2_instance_creation"
-  ami_id_value = "ami-id"
+  ami_id_value = ""
   instance_type_value = "t2.micro"
-  subnet_id_value = "subnet-id"
-  key_name_value = "pem_key"
+  subnet_id_value = ""
+  key_name_value = ""
 }
