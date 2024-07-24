@@ -70,8 +70,6 @@ It will store the information of the infrastructure it has created.
 
 - Stores the terraform statefile in remote host like S3 and etc…
 
-**`balasubbaraju.chinnamraju@hdfcbank.com`**
-
 **`Day5`**
 
 **Provisioners**: 
