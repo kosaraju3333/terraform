@@ -90,6 +90,7 @@ Types of
 **`Day6`**:
 
 **Workspaces:**
+Statefile is created for every or per environment 
 
 Terraform Workspace Commands:
 
