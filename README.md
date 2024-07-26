@@ -13,10 +13,11 @@ Simple and Basic terraform execution steps.
 
 3: Have to run bunch of terraform commands, will help to crate a infrastructure. 
 
-1. **`terraform init` → will read the terraform files and initialised the configuration** 
-2. **`terraform plan`  → Dry run, It will show you the changes your are applying on infrastructure** 
-3. **`terraform apply` → Will Create apply configuration for creating infrastructure you mentioned on terraform file** 
-4. **`terraform destroy` → I will delete the infrastructure that you created.**
+1. **`terraform validate` - It will check or validate our code and check for sysntax errors**
+2. **`terraform init` → will read the terraform files and initialised the configuration** 
+3. **`terraform plan`  → Dry run, It will show you the changes your are applying on infrastructure** 
+4. **`terraform apply` → Will Create apply configuration for creating infrastructure you mentioned on terraform file** 
+5. **`terraform destroy` → I will delete the infrastructure that you created.**
 
 4: Satefiles Basics
 
