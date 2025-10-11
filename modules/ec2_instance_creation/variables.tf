@@ -13,3 +13,16 @@ variable "subnet_id_value" {
 variable "key_name_value" {
   description = "Declearing key_nmae value"
 }
+
+variable "common_tags" {
+  type = map(string)
+  default = {
+    "Environment" = "Dev"
+    "Owner" = "ramakrishna"
+  }
+}
+
+variable "tags" {
+  type = map(string)
+  default = { }
+}
