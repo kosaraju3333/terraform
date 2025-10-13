@@ -40,3 +40,22 @@ variable "vm_name" {
   
 }
 
+variable "enable_remote_exec" {
+    type = bool
+    default = false
+}
+
+variable "private_key_path" {
+  
+}
+
+variable "script_path" {
+  type        = string
+  description = "Local path to the script file"
+}
+
+# variable "script_destination_path" {
+#     type = string
+#     description = "Target path"
+  
+# }

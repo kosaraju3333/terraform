@@ -31,7 +31,22 @@ variable "security_groups" {
           from_port = 443
           protocol = "tcp"
           to_port = 443
+        },
+        {
+          cidr_block = [ "0.0.0.0/0" ]
+          from_port = 5050
+          protocol = "tcp"
+          to_port = 5050
+
+        },
+        {
+          cidr_block = [ "0.0.0.0/0" ]
+          from_port = -1
+          protocol = "icmp"
+          to_port = -1
+
         }
+
       ]
       
       }
@@ -75,4 +90,12 @@ variable "common_tags" {
 variable "tags" {
   type = map(string)
   default = { }
+}
+
+variable "rds_name" {
+    type = string
+}
+
+variable "vpc_cidr_block" {
+  type = string
 }

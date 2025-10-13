@@ -29,7 +29,33 @@ resource "aws_security_group" "sg" {
         var.tags,
         {Name = "${each.key}-sg"}
     )
+}
 
+#### Create RDS security group
+resource "aws_security_group" "mysql_rds_sg" {
+    name = var.rds_name
+    description = "Allow MySQL traffic"
+    vpc_id = var.vpc_id
 
-  
+    tags = merge(
+        var.common_tags,
+        var.tags,
+        {Name = var.rds_name}
+  )  
+}
+
+resource "aws_vpc_security_group_ingress_rule" "allow_all_icmp_ipv4" {
+    security_group_id = aws_security_group.mysql_rds_sg.id
+    cidr_ipv4 = var.vpc_cidr_block
+    from_port = -1
+    to_port = -1
+    ip_protocol = "icmp"  
+}
+
+resource "aws_vpc_security_group_ingress_rule" "allow_mysql_port" {
+    security_group_id = aws_security_group.mysql_rds_sg.id
+    cidr_ipv4 = var.vpc_cidr_block
+    from_port = 3306
+    to_port = 3306
+    ip_protocol = "tcp"  
 }
