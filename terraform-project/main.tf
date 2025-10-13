@@ -10,3 +10,21 @@ module "network" {
     nat_name = "portal-vpc-nat"
     eip_name = "portal-vpc-nat-eip"
 }
+
+module "security" {
+    source = "./modules/security"
+    vpc_id = module.network.portal-vpc-id
+}
+
+module "ec2" {
+    source = "./modules/compute"
+    vm_name = "Terraform-text-VM"
+    instance-type = "t2.small"
+    ami_id = "ami-0360c520857e3138f"
+    subnet_id = module.network.public-subnets[0]
+    key_name = "my_work"
+    security_group = module.security.sg-ids["ec2"]
+    instance_profile = "EC2-S3-Full_Access"
+  
+}
+
