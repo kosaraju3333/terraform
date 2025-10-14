@@ -27,9 +27,13 @@ module "ec2" {
     key_name = "my_work"
     security_group = module.security.sg-ids["ec2"]
     instance_profile = "bank-app"
-    private_key_path = "pem key path"
+    private_key_path = "pem_key path"
     enable_remote_exec = "true"
-    script_path = "/Users/ramakrishnakosaraju/spontansolutions/terraform/terraform-project/scripts/nginx_install.sh"      
+    script_path = "script_path/nginx_install.sh"      
+}
+
+module "secrets" {
+    source = "./modules/secrets"
 }
 
 module "rds" {
@@ -42,9 +46,9 @@ module "rds" {
     allocated_storage = "20"
     storage_type = "gp2"
 
-    db_name = ""
-    username = " "
-    password = " "
+    db_name = module.secrets.db_name
+    username = module.secrets.db_username
+    password = module.secrets.db_password
     port = "3306"
 
     vpc_security_group_ids = [module.security.mysql_rds_sg]
@@ -54,9 +58,9 @@ module "rds" {
 
 module "router3" {
     source = "./modules/route53"
-    zone_id = "Route_53_private_hosted_zone"
+    zone_id = "Private Hosted Zone ID"
     vpc_id = module.network.portal-vpc-id
-    route53-private-zone-id = "Route_53_private_hosted_zone"
+    route53-private-zone-id = "Private Hosted Zone ID"
     recored_name = "bank-db"
     rds_endpoint = module.rds.mysql_rds_address
     vpc_region = "us-east-1"
