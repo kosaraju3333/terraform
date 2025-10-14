@@ -45,3 +45,6 @@ resource "null_resource" "remote_exec" {
   }
   
 }
+
+#### Creat Launch Templete
+
