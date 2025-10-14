@@ -1,3 +1,8 @@
+variable "environment" {
+  description = "Environment name"
+  type        = string
+}
+
 variable "vpc-cidr-block" {
     description = "CIDR Block for VPC"
 }
@@ -7,19 +12,15 @@ variable "vpc_name" {
   description = "Custom VPC name tag"
 }
 
-
 variable "common_tags" {
+  description = "Common tags to apply to all resources"
   type = map(string)
-  default = {
-    "Environment" = "Dev"
-    "Owner" = "Ramakrishna"
-  }
 }
 
-variable "tags" {
-  type = map(string)
-  default = { }
-}
+# variable "tags" {
+#   type = map(string)
+#   default = { }
+# }
 
 variable "public_subnet_cidrs" {
   type = list(string)

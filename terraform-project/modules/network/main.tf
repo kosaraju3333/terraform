@@ -7,9 +7,14 @@ resource "aws_vpc" "portal-vpc" {
 
   tags = merge(
     var.common_tags,
-    var.tags,
-    {Name = var.vpc_name}
+    {Name = "${var.vpc_name}-${var.environment}"}
   )
+
+  # tags = merge(
+  #   var.common_tags,
+  #   var.tags,
+  #   {Name = var.vpc_name}
+  # )
 }
 
 #### Public and Private Subnets Creation Resources
@@ -28,8 +33,7 @@ resource "aws_subnet" "public" {
 
     tags = merge(
     var.common_tags,
-    var.tags,
-    {Name = "Public-Subnet-${count.index + 1}"}
+    {Name = "${var.vpc_name}-Public-Subnet-${count.index + 1}-${var.environment}"}
 
   )  
 }
@@ -44,8 +48,7 @@ resource "aws_subnet" "private" {
 
     tags = merge(
     var.common_tags,
-    var.tags,
-    {Name = "Private-Subnet-${count.index + 1}"}
+    {Name = "${var.vpc_name}-Private-Subnet-${count.index + 1}-${var.environment}"}
 
   )  
 }
@@ -55,8 +58,7 @@ resource "aws_internet_gateway" "igw" {
     vpc_id = aws_vpc.portal-vpc.id
     tags = merge(
     var.common_tags,
-    var.tags,
-    {Name = var.igw_name}
+    {Name = "${var.vpc_name}-${var.igw_name}-${var.environment}"}
   )  
 }
 
@@ -65,8 +67,7 @@ resource "aws_eip" "nat_eip" {
     domain = "vpc"
     tags = merge(
     var.common_tags,
-    var.tags,
-    {Name = var.eip_name}
+    {Name = "${var.vpc_name}-${var.eip_name}-${var.environment}"}
   )
   
 }
@@ -78,8 +79,8 @@ resource "aws_nat_gateway" "nat" {
 
     tags = merge(
     var.common_tags,
-    var.tags,
-    {Name = var.nat_name})
+    {Name = "${var.vpc_name}-${var.nat_name}-${var.environment}"}
+    )
 
 }
 
@@ -97,8 +98,7 @@ resource "aws_route_table" "portal_vpc_public_RT" {
 
     tags = merge(
     var.common_tags,
-    var.tags,
-    {Name = var.public_RT_name}
+    {Name = "${var.vpc_name}-${var.public_RT_name}-${var.environment}"}
   )  
 }
     #### Public Subnets association to Route Table
@@ -122,8 +122,7 @@ resource "aws_route_table" "portal_vpc_private_RT" {
 
     tags = merge(
     var.common_tags,
-    var.tags,
-    {Name = var.private_RT_name}
+    {Name = "${var.vpc_name}-${var.private_RT_name}-${var.environment}"}
   )  
   
 }
