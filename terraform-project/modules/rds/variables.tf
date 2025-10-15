@@ -1,3 +1,8 @@
+variable "environment" {
+  description = "Environment name"
+  type        = string
+}
+
 variable "rds_subnet_group_name" {
     type = string
 }
@@ -7,16 +12,12 @@ variable "subnet_ids" {
 }
 
 variable "common_tags" {
+  description = "Common tags to apply to all resources"
   type = map(string)
-  default = {
-    "Environment" = "Dev"
-    "Owner" = "Ramakrishna"
-  }
 }
 
-variable "tags" {
-  type = map(string)
-  default = { }
+variable "app_name" {
+    type = string
 }
 
 variable "identifier" {

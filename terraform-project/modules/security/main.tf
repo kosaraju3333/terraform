@@ -26,8 +26,7 @@ resource "aws_security_group" "sg" {
 
     tags = merge(
         var.common_tags,
-        var.tags,
-        {Name = "${each.key}-sg"}
+        {Name = "${each.key}-sg-${var.environment}"}
     )
 }
 
@@ -39,8 +38,7 @@ resource "aws_security_group" "mysql_rds_sg" {
 
     tags = merge(
         var.common_tags,
-        var.tags,
-        {Name = var.rds_name}
+        {Name = "${var.rds_name}-sg-${var.environment}"}
   )  
 }
 

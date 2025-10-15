@@ -4,15 +4,14 @@ resource "aws_db_subnet_group" "rds_subnet_group" {
 
     tags = merge(
         var.common_tags,
-        var.tags,
-        {Name = var.rds_subnet_group_name}
+        {Name = "${var.rds_subnet_group_name}-${var.environment}"}
   )
 }
 
 #### Create the RDS Instance
 
 resource "aws_db_instance" "mysql_rds" {
-    identifier = var.identifier
+    identifier = "${var.app_name}-${var.identifier}-${var.environment}"
     engine = "mysql"
     engine_version = var.engine_version
     instance_class = var.instance_class
@@ -36,7 +35,6 @@ resource "aws_db_instance" "mysql_rds" {
 
     tags = merge(
         var.common_tags,
-        var.tags,
-        {Name = var.rds_name}
+        {Name = "${var.rds_name}-${var.environment}"}
   )
 }

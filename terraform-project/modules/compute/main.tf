@@ -9,8 +9,7 @@ resource "aws_instance" "ec2" {
 
     tags = merge(
         var.common_tags,
-        var.tags,
-        {Name = var.vm_name}
+        {Name = "${var.vm_name}-${var.environment}"}
   )
   
 }
@@ -45,6 +44,4 @@ resource "null_resource" "remote_exec" {
   }
   
 }
-
-#### Creat Launch Templete
 

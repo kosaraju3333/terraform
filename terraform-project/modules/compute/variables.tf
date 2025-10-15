@@ -1,3 +1,8 @@
+variable "environment" {
+  description = "Environment name"
+  type        = string
+}
+
 variable "ami_id" {
     type = string
 }
@@ -23,17 +28,14 @@ variable "instance_profile" {
 }
 
 variable "common_tags" {
+  description = "Common tags to apply to all resources"
   type = map(string)
-  default = {
-    "Environment" = "Dev"
-    "Owner" = "Ramakrishna"
-  }
 }
 
-variable "tags" {
-  type = map(string)
-  default = { }
-}
+# variable "tags" {
+#   type = map(string)
+#   default = { }
+# }
 
 variable "vm_name" {
     type = string

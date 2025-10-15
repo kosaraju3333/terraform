@@ -1,3 +1,8 @@
+variable "environment" {
+  description = "Environment name"
+  type        = string
+}
+
 variable "security_groups" {
     type = map(object({
       description = string
@@ -80,17 +85,14 @@ variable "vpc_id" {
 }
 
 variable "common_tags" {
+  description = "Common tags to apply to all resources"
   type = map(string)
-  default = {
-    "Environment" = "Dev"
-    "Owner" = "Ramakrishna"
-  }
 }
 
-variable "tags" {
-  type = map(string)
-  default = { }
-}
+# variable "tags" {
+#   type = map(string)
+#   default = { }
+# }
 
 variable "rds_name" {
     type = string
