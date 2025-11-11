@@ -48,3 +48,11 @@ The **AMI** used in the Launch Template contains a **systemd service** that auto
 ├── outputs.tf            # Outputs of created resources
 ├── provider.tf           # AWS provider configuration
 └── backend.tf            # Remote state configuration (S3 backend)
+```
+
+## ⚙️ Terraform Features Used
+- Modularization — Each resource category is isolated for reusability
+- Workspaces — For managing multiple environments (e.g., dev, prod)
+- Remote State — Stored in S3 for collaboration and consistency
+- Count — Used for creating multiple subnets dynamically
+- Variable and Output Management — Clean and structured configuration
