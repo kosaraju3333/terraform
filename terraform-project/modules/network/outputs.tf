@@ -15,3 +15,7 @@ output "private-subnets" {
     value = aws_subnet.private[*].id
   
 }
+
+output "private_RT" {
+    value = aws_route_table.portal_vpc_private_RT.id
+}

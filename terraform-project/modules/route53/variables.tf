@@ -32,3 +32,20 @@ variable "rds_endpoint" {
     type = string
   
 }
+
+#### ALB DNS variables
+
+variable "route53-public-zone-id" {
+    description = "Public Hosted Zone ID"
+    type = string
+}
+
+variable "alb_recored_name" {
+    description = "Recored name"
+    type = string
+}
+
+variable "alb_dns_name" {
+    description = "alb dns value"
+    type = list(string)
+}

@@ -1,33 +1,106 @@
-resource "aws_security_group" "sg" {
-    for_each = var.security_groups
+##############################
+# ALB Security Group
+##############################
+resource "aws_security_group" "alb_sg" {
+  name        = "alb-sg"
+  description = "Allow HTTP/HTTPS from internet"
+  vpc_id      = var.vpc_id
 
-    name = "${each.key}-sg"
-    description = each.value.description
-    vpc_id = var.vpc_id
+  ingress {
+    description = "Allow HTTP"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 
-    dynamic "ingress" {
-        for_each = each.value.ingress
-        content {
-          from_port = ingress.value.from_port
-          to_port = ingress.value.to_port
-          protocol = ingress.value.protocol
-          cidr_blocks = ingress.value.cidr_block
-        }
-      
-    }
+  ingress {
+    description = "Allow HTTPS"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 
-    egress {
-        from_port   = 0
-        to_port     = 0
-        protocol    = "-1"
-        cidr_blocks = ["0.0.0.0/0"]
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 
-    }
+  tags = merge(
+    var.common_tags,
+    { Name = "alb-sg-${var.environment}" }
+  )
+}
 
-    tags = merge(
-        var.common_tags,
-        {Name = "${each.key}-sg-${var.environment}"}
-    )
+##############################
+# EC2 Security Group
+##############################
+resource "aws_security_group" "ec2_sg" {
+  name        = "ec2-sg"
+  description = "Allow traffic from ALB"
+  vpc_id      = var.vpc_id
+
+  # Allow incoming app traffic from ALB SG
+  ingress {
+    description      = "Allow app traffic from ALB"
+    from_port        = 5050
+    to_port          = 5050
+    protocol         = "tcp"
+    security_groups  = [aws_security_group.alb_sg.id]
+  }
+
+  # Allow SSH from Bastion/Your IP (optional)
+  ingress {
+    description = "Allow SSH"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"] # optional
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = merge(
+    var.common_tags,
+    { Name = "ec2-sg-${var.environment}" }
+  )
+}
+
+##############################
+# VPC interface endpoint Security Group
+##############################
+resource "aws_security_group" "vpc_endpoint_sg" {
+  name        = "vpc_endpoint_sg"
+  description = "Allow traffic from EC2 to VPC Interface Endpoint"
+  vpc_id      = var.vpc_id
+
+  # Allow incoming app traffic from ALB SG
+  ingress {
+    description      = "Allow app traffic from ALB"
+    from_port        = 443
+    to_port          = 443
+    protocol         = "tcp"
+    security_groups  = [aws_security_group.ec2_sg.id]
+  }
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = merge(
+    var.common_tags,
+    { Name = "vpc_endpoint_sg-${var.environment}" }
+  )
 }
 
 #### Create RDS security group
@@ -57,3 +130,13 @@ resource "aws_vpc_security_group_ingress_rule" "allow_mysql_port" {
     to_port = 3306
     ip_protocol = "tcp"  
 }
+
+
+#### Fetch SSL Certificates ARN #####
+
+data "aws_acm_certificate" "ssl-cert" {
+    domain = var.domain_name
+    statuses = ["ISSUED"]
+    most_recent = true 
+}
+
