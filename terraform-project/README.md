@@ -58,6 +58,7 @@ The **AMI** used in the Launch Template contains a **systemd service** that auto
 - Variable and Output Management — Clean and structured configuration
 
 🧩 Terraform Commands Used
+```bash
 # Initialize the project
 terraform init
 
@@ -74,5 +75,7 @@ terraform apply
 terraform workspace new <workspace_name>
 terraform workspace list
 terraform workspace select <workspace_name>
+```
+
 
 🔐 Security Implementation
