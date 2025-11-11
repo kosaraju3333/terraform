@@ -56,3 +56,23 @@ The **AMI** used in the Launch Template contains a **systemd service** that auto
 - Remote State — Stored in S3 for collaboration and consistency
 - Count — Used for creating multiple subnets dynamically
 - Variable and Output Management — Clean and structured configuration
+
+🧩 Terraform Commands Used
+# Initialize the project
+terraform init
+
+# Validate the syntax and configuration
+terraform validate
+
+# Preview infrastructure changes
+terraform plan
+
+# Apply changes to create resources
+terraform apply
+
+# Create and manage multiple workspaces
+terraform workspace new <workspace_name>
+terraform workspace list
+terraform workspace select <workspace_name>
+
+🔐 Security Implementation
