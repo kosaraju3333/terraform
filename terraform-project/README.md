@@ -103,7 +103,7 @@ terraform workspace select <workspace_name>
 - S3 Backend for Terraform remote state
 - Systemd Service for auto-starting the application from AMI
 
-##🧾 Notes
+## 🧾 Notes
 - AMI used in Launch Template contains startup script for app launch
 - Each environment (dev, stage, prod) is maintained using Terraform workspaces
 - All outputs (ALB DNS, RDS endpoint, etc.) are defined in module level outputs.tf
