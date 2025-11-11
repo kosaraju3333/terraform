@@ -55,6 +55,7 @@ The **AMI** used in the Launch Template contains a **systemd service** that auto
 - Workspaces — For managing multiple environments (e.g., dev, prod)
 - Remote State — Stored in S3 for collaboration and consistency
 - Count — Used for creating multiple subnets dynamically
+- Provisioners (file, remote-exec) — to automate tasks
 - Variable and Output Management — Clean and structured configuration
 
 🧩 Terraform Commands Used
@@ -101,3 +102,8 @@ terraform workspace select <workspace_name>
 - AWS Services: VPC, EC2, ALB, RDS, Route53, Secrets Manager, ACM, NAT, IGW
 - S3 Backend for Terraform remote state
 - Systemd Service for auto-starting the application from AMI
+
+##🧾 Notes
+- AMI used in Launch Template contains startup script for app launch
+- Each environment (dev, stage, prod) is maintained using Terraform workspaces
+- All outputs (ALB DNS, RDS endpoint, etc.) are defined in module level outputs.tf
