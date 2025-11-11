@@ -78,4 +78,26 @@ terraform workspace select <workspace_name>
 ```
 
 
-🔐 Security Implementation
+## 🔐 Security Implementation
+- Security groups follow least privilege principles
+- VPC Endpoint SG allows access on port 443 only from private EC2
+- Private RDS accessible only within private subnets
+- SSL/TLS termination at ALB using AWS ACM certificates
+- Secrets fetched securely from AWS Secrets Manager
+
+## 🧠 High Availability Design
+- Multi-AZ setup across two Availability Zones
+- Auto Scaling Group ensures fault tolerance and elasticity
+- NAT Gateway and VPC Endpoints ensure secure private subnet connectivity
+- ALB distributes incoming traffic evenly across private EC2s
+
+## 🌐 DNS and SSL
+- Public Route53 Record — Points domain to ALB DNS
+- Private Route53 Record — Internal DNS for RDS
+- SSL Certificates — Managed via AWS Certificate Manager (ACM)
+
+## 🧰 Tools and Technologies
+- Terraform (Infrastructure as Code)
+- AWS Services: VPC, EC2, ALB, RDS, Route53, Secrets Manager, ACM, NAT, IGW
+- S3 Backend for Terraform remote state
+- Systemd Service for auto-starting the application from AMI
